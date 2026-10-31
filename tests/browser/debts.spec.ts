@@ -1,0 +1,27 @@
+import {test,expect} from '@playwright/test';
+test('mobile repayment, history and Armenian translation',async({page})=>{
+  await page.setViewportSize({width:390,height:844});
+  await page.goto('/');
+  await page.getByRole('button',{name:'Создать бюджет'}).click();
+  await page.getByRole('button',{name:'План'}).last().click();
+  await page.getByRole('button',{name:'Долги'}).click();
+  await page.getByRole('button',{name:'Добавить долг'}).click();
+  await page.getByRole('dialog').getByLabel('Название').fill('Квартира');
+  await page.getByRole('dialog').getByLabel('Первоначальный долг · AMD').fill('96000');
+  await page.getByRole('dialog').getByRole('button',{name:'Сохранить'}).click();
+  await expect(page.getByText('Квартира')).toBeVisible();
+  await page.getByRole('button',{name:'Погасить часть долга'}).click();
+  const amountInput=page.getByRole('dialog').getByRole('textbox',{name:'Фактическая сумма · AMD'});
+  await expect(amountInput).toHaveCount(1);
+  await amountInput.fill('30000');
+  await page.getByRole('dialog').getByRole('button',{name:'Сохранить'}).click();
+  await expect(page.locator('.debt-balance')).toContainText(/66\s*000/);
+  await page.getByRole('button',{name:'История погашений (1)'}).click();
+  await expect(page.locator('.debt-history-row')).toHaveCount(1);
+  await page.getByRole('button',{name:'Настройки'}).last().click();
+  await page.getByRole('button',{name:'Հայերեն'}).click();
+  await expect(page.getByRole('heading',{name:'Կարգավորումներ'})).toBeVisible();
+  await page.getByRole('button',{name:'Պլան'}).last().click();
+  await expect(page.getByRole('button',{name:'Պարտքեր'})).toBeVisible();
+  await expect.poll(()=>page.evaluate(()=>document.documentElement.scrollWidth-document.documentElement.clientWidth)).toBeLessThanOrEqual(1);
+});
