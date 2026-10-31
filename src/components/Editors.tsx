@@ -26,7 +26,7 @@ export function TransactionEditor({item,defaultKind='expense',...p}:Shared&{item
       categoryId:categoryId||undefined,objectId:objectId||undefined,note:note.trim()||undefined,createdAt:item?.createdAt??new Date().toISOString(),occurrenceId:item?.occurrenceId});p.onSaved();}
     catch(err){lock.current=false;setSaving(false);p.onError(err);}
   };
-  return <Sheet title={item?t('edit'):t('addOperation')} onClose={()=>{if(!saving)p.onClose();}}><form onSubmit={submit} className="editor-form">
+  return <Sheet title={item?t('edit'):t('addOperation')} onClose={()=>{if(!saving)p.onClose();}}><form onSubmit={submit}  noValidate className="editor-form">
     {!item?.occurrenceId&&<TypeToggle value={kind} onChange={k=>{setKind(k);setCategoryId('');}} language={p.language}/>}
     <Field label={t('title')} error={errors.title}><input autoFocus maxLength={200} value={title} onChange={e=>setTitle(e.target.value)} placeholder={kind==='expense'?t('exampleExpense'):t('exampleIncome')}/></Field>
     <div className="two-fields"><Field label={`${t('amount')} · ${p.settings.currency}`} error={errors.amount}><input inputMode="decimal" value={amount} onChange={e=>setAmount(e.target.value)} placeholder="0.00"/></Field>

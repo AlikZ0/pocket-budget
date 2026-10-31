@@ -167,8 +167,8 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 /* The status tabs are always fully visible; scrolling is never needed to find a filter. */
 .seg-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));overflow:visible;gap:8px;min-width:0}
 .seg-tabs button{min-width:0;width:100%;white-space:normal;overflow-wrap:anywhere;line-height:1.35;padding:10px 7px}
-.seg-tabs.plan-subtabs{grid-template-columns:repeat(2,minmax(0,1fr)); ma}
-    .seg-tabs.plan-subtabs button{min-width:0}
+.seg-tabs.plan-subtabs{grid-template-columns:repeat(2,minmax(0,1fr)); margin-bottom:10px}
+.seg-tabs.plan-subtabs button{min-width:0}
 .choice-list button>span:nth-child(2){min-width:0;overflow-wrap:anywhere}
 .panel-head>*{min-width:0}
 .panel-head h2,.panel-head p{overflow-wrap:anywhere}
